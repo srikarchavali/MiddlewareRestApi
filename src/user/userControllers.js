@@ -1,9 +1,15 @@
 const User = require('./userModel');
 const bcrypt = require('bcryptjs');
-
+const Movies = require('../movies/movieModel')
 exports.addUser = async (req, res)=>{
     try {
-        const newUser = await User.create(req.body);
+        const newUser = await User.create({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            movies: await Movies.findOne({username: `${req.body.username}`})
+        });
+        console.log(this.movies)
         res.status(200).send({user: newUser});
     } catch (error) {
         console.log(error)
@@ -13,8 +19,14 @@ exports.addUser = async (req, res)=>{
 
 exports.listUser = async (req, res) => {
     try {
-        const userList = await User.find({});
-        res.status(200).send({users: userList});
+        const userList = await User.find({username: `${req.body.username}`});
+        const movies = await Movies.find({username: `${req.body.username}`})
+        // const userRatings = await User.find().populate(`${movies}`)
+        res.status(200).send({
+            users: userList,
+            movies: movies,
+            // userRatings: userRatings
+        });
     } catch (error) {
         res.status(500).send({ err: error.message });
     }
@@ -40,7 +52,7 @@ exports.compareUser = async (req, res) => {
 }
 
 // Delete user
-exports.deleteOne = async (req, res) => {
+exports.deleteUser = async (req, res) => {
     try {
         const result = await User.deleteOne({username: req.body.username});
         if(result){

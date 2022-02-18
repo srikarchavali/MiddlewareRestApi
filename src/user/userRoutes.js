@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {addUser, listUser, compareUser, deleteOne} = require('./userControllers');
+const {addUser, listUser, compareUser, deleteUser} = require('./userControllers');
 const {hashPass} = require('../middleware/index');
 const { validate } = require('../middleware/validator');
 const userRouter = Router(); 
@@ -11,7 +11,7 @@ userRouter.get("/user", listUser);
 
 userRouter.get("/login", compareUser);
 
-userRouter.delete("/delete", deleteOne)
+userRouter.delete("/deleteUser", deleteUser)
 
 
 module.exports = userRouter;
