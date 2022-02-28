@@ -11,7 +11,7 @@ userRouter.get("/user", listUser);
 
 userRouter.get("/login", compareUser);
 
-userRouter.delete("/deleteUser", deleteUser)
+userRouter.delete("/deleteUser", deleteUser);
 
 
 module.exports = userRouter;

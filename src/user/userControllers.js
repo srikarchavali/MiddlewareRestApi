@@ -19,9 +19,14 @@ exports.addUser = async (req, res)=>{
 
 exports.listUser = async (req, res) => {
     try {
-        const userList = await User.find({username: `${req.body.username}`});
+        // const userList = await User.find({username: `${req.body.username}`});
+        const userList = await User.find({});
         const movies = await Movies.find({username: `${req.body.username}`})
-        // const userRatings = await User.find().populate(`${movies}`)
+        // const userRatings = await User.find({username: `${req.body.username}`}).populate({
+        //     path: 'User.movies', 
+        //     strictPopulate: false,
+        //     select: `${movies.title}`
+        // })
         res.status(200).send({
             users: userList,
             movies: movies,
