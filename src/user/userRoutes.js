@@ -9,7 +9,7 @@ userRouter.post("/user", validate, hashPass, addUser);
 
 userRouter.get("/user", listUser);
 
-userRouter.get("/login", compareUser);
+userRouter.post("/login", compareUser);
 
 userRouter.delete("/deleteUser", deleteUser);
 
